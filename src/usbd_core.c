@@ -86,13 +86,8 @@ static usbd_respond usbd_process_devrq (usbd_device *dev, usbd_ctlreq *req) {
         req->data[0] = dev->status.device_cfg;
         return usbd_ack;
     case USB_STD_GET_DESCRIPTOR:
-        if (req->wValue == ((USB_DTYPE_STRING << 8) | INTSERIALNO_DESCRIPTOR )) {
-            dev->status.data_count = dev->driver->get_serialno_desc(req->data);
-            return usbd_ack;
-        } else {
-            if (dev->descriptor_callback) {
-                return dev->descriptor_callback(req, &(dev->status.data_ptr), &(dev->status.data_count));
-            }
+        if (dev->descriptor_callback) {
+            return dev->descriptor_callback(req, &(dev->status.data_ptr), &(dev->status.data_count));
         }
         break;
     case USB_STD_GET_STATUS:

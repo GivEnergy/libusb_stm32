@@ -504,32 +504,6 @@ static void evt_poll(usbd_device *dev, usbd_evt_callback callback) {
     callback(dev, _ev, _ep);
 }
 
-static uint32_t fnv1a32_turn (uint32_t fnv, uint32_t data ) {
-    for (int i = 0; i < 4 ; i++) {
-        fnv ^= (data & 0xFF);
-        fnv *= 16777619;
-        data >>= 8;
-    }
-    return fnv;
-}
-
-static uint16_t get_serialno_desc(void *buffer) {
-    struct  usb_string_descriptor *dsc = buffer;
-    uint16_t *str = dsc->wString;
-    uint32_t fnv = 2166136261;
-    fnv = fnv1a32_turn(fnv, *(uint32_t*)(UID_BASE + 0x00));
-    fnv = fnv1a32_turn(fnv, *(uint32_t*)(UID_BASE + 0x04));
-    fnv = fnv1a32_turn(fnv, *(uint32_t*)(UID_BASE + 0x08));
-    for (int i = 28; i >= 0; i -= 4 ) {
-        uint16_t c = (fnv >> i) & 0x0F;
-        c += (c < 10) ? '0' : ('A' - 10);
-        *str++ = c;
-    }
-    dsc->bDescriptorType = USB_DTYPE_STRING;
-    dsc->bLength = 18;
-    return 18;
-}
-
  __attribute__((externally_visible)) const struct usbd_driver usbd_devfs = {
     getinfo,
     enable,
@@ -543,7 +517,6 @@ static uint16_t get_serialno_desc(void *buffer) {
     ep_isstalled,
     evt_poll,
     get_frame,
-    get_serialno_desc,
 };
 
 #endif //USBD_STM32F103

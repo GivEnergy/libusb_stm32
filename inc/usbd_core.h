@@ -299,13 +299,6 @@ typedef void (*usbd_hw_poll)(usbd_device *dev, usbd_evt_callback callback);
 /**\brief Gets frame number from usb hardware.*/
 typedef uint16_t (*usbd_hw_get_frameno)(void);
 
-
-/**\brief Makes a string descriptor contains unique serial number from hardware ID's
- * \param[in] buffer pointer to buffer for the descriptor
- * \return of the descriptor in bytes
- */
-typedef uint16_t (*usbd_hw_get_serialno)(void *buffer);
-
 /**\brief Represents a hardware USB driver call table.*/
 struct usbd_driver {
     usbd_hw_getinfo         getinfo;            /**<\copybrief usbd_hw_getinfo */
@@ -320,7 +313,6 @@ struct usbd_driver {
     usbd_hw_ep_isstalled    ep_isstalled;       /**<\copybrief usbd_hw_ep_isstalled */
     usbd_hw_poll            poll;               /**<\copybrief usbd_hw_poll */
     usbd_hw_get_frameno     frame_no;           /**<\copybrief usbd_hw_get_frameno */
-    usbd_hw_get_serialno    get_serialno_desc;  /**<\copybrief usbd_hw_get_serialno */
 };
 
 /** @} */

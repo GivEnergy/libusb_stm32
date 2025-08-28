@@ -79,8 +79,6 @@ extern "C" {
 /**\name Special string descriptor indexes
  * @{ */
 #define NO_DESCRIPTOR               0x00    /**<\brief String descriptor doesn't exists in the device.*/
-#define INTSERIALNO_DESCRIPTOR      0xFE    /**<\brief String descriptor is an internal serial number
-                                             * provided by hardware driver.*/
 /** @} */
 
 /**\name USB class definitions
