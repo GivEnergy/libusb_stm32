@@ -505,7 +505,7 @@ static void evt_poll(usbd_device *dev, usbd_evt_callback callback) {
     callback(dev, _ev, _ep);
 }
 
- __attribute__((externally_visible)) const struct usbd_driver usbd_devfs = {
+const struct usbd_driver usbd_devfs = {
     getinfo,
     enable,
     connect,
